@@ -65,6 +65,7 @@ docker run --env-file .env battleford-jukebox
 
 ### Project Structure
 
+```
 battleford-jukebox/
 ├── commands/ # Discord command modules
 ├── controllers/ # Core controller classes
@@ -72,6 +73,7 @@ battleford-jukebox/
 ├── main.py # Application entry point
 ├── requirements.txt # Python dependencies
 └── Dockerfile # Container configuration
+```
 
 ### Adding New Commands
 
