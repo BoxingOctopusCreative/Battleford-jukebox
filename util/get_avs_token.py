@@ -1,3 +1,7 @@
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).parent.parent))
+
 import requests
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import webbrowser
@@ -7,7 +11,7 @@ from config import (
     AVS_CLIENT_SECRET
 )
 
-REDIRECT_URI = "http://localhost:3000/callback"
+REDIRECT_URI = "http://localhost:3000"
 
 # Store the authorization code
 auth_code = None
@@ -16,6 +20,7 @@ class CallbackHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         global auth_code
         query_components = parse_qs(urlparse(self.path).query)
+        print(f"Received path: {self.path}")  # Debug logging
         
         if 'code' in query_components:
             auth_code = query_components['code'][0]
@@ -40,11 +45,11 @@ def get_refresh_token():
         "&response_type=code"
     )
     
-    # Open browser for user authorization
+    print("Opening browser for authorization...")
     webbrowser.open(auth_url)
     
-    # Wait for callback
-    server.handle_request()
+    print("Waiting for callback on http://localhost:3000 ...")
+    server.serve_forever()  # Replace handle_request() with serve_forever()
     
     if not auth_code:
         raise Exception("Failed to get authorization code")

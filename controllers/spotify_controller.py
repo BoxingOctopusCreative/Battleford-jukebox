@@ -17,7 +17,8 @@ class SpotifyController:
         ))
         self.playlist_id = PLAYLIST_ID
         
-    async def search_track(self, query):
+    def search_track(self, query):
+        print(f"Searching for track: {query}")
         results = self.sp.search(q=query, type='track', limit=1)
         
         if not results['tracks']['items']:
@@ -30,7 +31,8 @@ class SpotifyController:
             'artist': track['artists'][0]['name']
         }
     
-    async def add_to_playlist(self, track_uri):
+    def add_to_playlist(self, track_uri):
+        print(f"Adding track {track_uri} to playlist {self.playlist_id}")
         self.sp.playlist_add_items(self.playlist_id, [track_uri])
         
     def get_playlist_url(self):

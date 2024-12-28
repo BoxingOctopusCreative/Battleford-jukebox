@@ -7,7 +7,7 @@ name = "pypi"
 discord = "*"
 spotipy = "*"
 python-dotenv = "*"
-alexaapi = "*"
+
 [dev-packages]
 
 [requires]

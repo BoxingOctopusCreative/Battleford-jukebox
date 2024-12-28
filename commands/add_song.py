@@ -3,39 +3,30 @@ import asyncio
 from functools import partial
 from config import CHANNEL_ID
 
+
 class AddSong(commands.Cog):
     def __init__(self, bot, spotify_controller):
         self.bot = bot
         self.spotify_controller = spotify_controller
 
     @commands.command(name='addsong')
-    async def add_song(self, ctx, *, song_query):
-        if ctx.channel.id != CHANNEL_ID:
-            return
-
+    async def add_song(self, ctx, *, song_name):
         try:
-            await ctx.send(f'Searching for: {song_query}...')
-            
-            # Search for track
-            loop = asyncio.get_event_loop()
-            track = await loop.run_in_executor(None, 
-                partial(self.spotify_controller.search_track, song_query))
+            print(f"Searching for: {song_name}")
+            track = self.spotify_controller.search_track(song_name)
             
             if not track:
-                await ctx.send(f'Could not find song: {song_query}')
+                await ctx.send(f'Could not find song: {song_name}')
                 return
-
-            # Add to playlist
-            await loop.run_in_executor(None,
-                partial(self.spotify_controller.add_to_playlist, track['uri']))
-            
-            # Get playlist URL
-            playlist_url = self.spotify_controller.get_playlist_url()
+                
+            print(f"Found track: {track}")
+            self.spotify_controller.add_to_playlist(track['uri'])
             
             await ctx.send(
                 f'Successfully added "{track["name"]}" by {track["artist"]} to the playlist!\n'
-                f'Playlist: {playlist_url}'
+                f'Playlist: {self.spotify_controller.get_playlist_url()}'
             )
-        
+            
         except Exception as e:
+            print(f"Error occurred: {str(e)}")
             await ctx.send(f'An error occurred: {str(e)}') 
