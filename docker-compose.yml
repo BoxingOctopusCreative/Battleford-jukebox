@@ -4,6 +4,8 @@ services:
   battleford-jukebox:
     build: .
     container_name: battleford-jukebox
+    env_file:
+      - .env
     environment:
       - DISCORD_TOKEN=${DISCORD_TOKEN}
       - CHANNEL_ID=${CHANNEL_ID}
