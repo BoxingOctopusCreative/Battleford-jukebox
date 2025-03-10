@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   battleford-jukebox:
-    image: ghcr.io/boxingoctopus/battleford-jukebox:latest
+    image: ghcr.io/boxingoctopuscreative/battleford-jukebox:latest
     container_name: battleford-jukebox
     environment:
       - DISCORD_TOKEN=${DISCORD_TOKEN}
