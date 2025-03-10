@@ -12,8 +12,5 @@ services:
       - SPOTIFY_REDIRECT_URI=${SPOTIFY_REDIRECT_URI}
       - PLAYLIST_ID=${PLAYLIST_ID}
     volumes:
-      - cache:/app/.cache  # For Spotify token persistence
+      - /var/tmp/battleford-jukebox/.cache:/app/.cache  # For Spotify token persistence
     restart: unless-stopped 
-
-volumes:
-  cache:
